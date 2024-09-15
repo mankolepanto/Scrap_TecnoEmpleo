@@ -3,6 +3,9 @@ import os
 from collections import OrderedDict
 
 def update_csv_with_job_data(job_data, filename='job_data.csv'):
+    # Asegúrate de que el archivo esté en la carpeta 'data'
+    filepath = os.path.join('data', filename)
+    
     # Get all unique keys from all jobs
     all_keys = set()
     for job in job_data:
@@ -19,10 +22,10 @@ def update_csv_with_job_data(job_data, filename='job_data.csv'):
     columns.extend(['textos_limpios', 'tecnologias'])
     
     # Check if file exists and get existing job IDs
-    file_exists = os.path.isfile(filename)
+    file_exists = os.path.isfile(filepath)
     existing_ids = set()
     if file_exists:
-        with open(filename, 'r', newline='', encoding='utf-8') as csvfile:
+        with open(filepath, 'r', newline='', encoding='utf-8') as csvfile:
             reader = csv.DictReader(csvfile)
             existing_ids = {row['offer_id'] for row in reader if 'offer_id' in row}
     
@@ -31,7 +34,7 @@ def update_csv_with_job_data(job_data, filename='job_data.csv'):
 
     rows_added = 0
     
-    with open(filename, mode, newline='', encoding='utf-8') as csvfile:
+    with open(filepath, mode, newline='', encoding='utf-8') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=columns)
         
         # Write header only if the file is new
@@ -70,6 +73,6 @@ def update_csv_with_job_data(job_data, filename='job_data.csv'):
             writer.writerow(row)
             rows_added += 1
     
-    print(f"CSV file '{filename}' has been updated successfully.")
+    print(f"CSV file '{filepath}' has been updated successfully.")
     print(f"Number of new rows added: {rows_added}")
     return rows_added  # Return the number of added rows

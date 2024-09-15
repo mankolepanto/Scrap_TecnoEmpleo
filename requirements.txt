@@ -1,5 +1,1 @@
-virtualenv env
-
-para activar el env
-& ".\scraping_env\Scripts\Activate.ps1"
-
+datetime
