@@ -1,11 +1,14 @@
 name: Daily Job
 
+
 on:
-  schedule:
-    - cron: '1 0 * * *' # Esto se ejecuta a las 00:01 UTC
+  pull_request:
+    branches: [ main ]  # o 'master' si esa es tu rama principal
+  push:
+    branches: [ main ]  # o 'master' si esa es tu rama principal
 
 jobs:
-  run-daily:
+  run-update:
     runs-on: ubuntu-latest
 
     permissions:
@@ -32,5 +35,6 @@ jobs:
       - name: Commit and Push
         uses: stefanzweifel/git-auto-commit-action@v5
         with: 
-          commit_message: todo_bien        
+          commit_message: Update completed
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 
